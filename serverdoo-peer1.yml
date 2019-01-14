@@ -1,0 +1,30 @@
+#in replica mode using windows you need to map the different replicas' host names to 127.0.0.1 in the hosts file
+#also you need to make sure that self preservation is turned on otherwise it'll eject the instances of the replicas right from the start without allowing them time to register
+#also as per https://github.com/spring-cloud/spring-cloud-netflix/issues/1251 all replicas must have the same defaultZone configuration (even if it's redundant)
+spring:  
+  profiles: peer1 
+  application:
+    name: serverdoo
+  security:
+    user: 
+      name: daniel
+      password: daniel
+      
+server:
+  port: ${PORT:8761}
+eureka:
+  client:
+    registerWithEureka: true #needs to be true for replica mode
+    fetchRegistry:  true #needs to be true for replica mode
+    serviceUrl:
+      defaultZone:  ${EUREKA_URL:http://daniel:daniel@peer1:8761/eureka/},${EUREKA_URL:http://daniel:daniel@peer2:8762/eureka/},${EUREKA_URL:http://daniel:daniel@peer3:8763/eureka/}
+#this is to have eureka server expire the lease in case of a client unexpected close, don't do it in production!!
+  server:
+    enableSelfPreservation: true  
+   
+  instance:   
+    appname: serverdoo
+    hostname: peer1
+    metadataMap:
+      zone: zone1 
+      

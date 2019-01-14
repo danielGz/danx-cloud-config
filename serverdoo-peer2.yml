@@ -1,0 +1,26 @@
+spring:
+  security:
+    user: 
+      name: daniel
+      password: daniel
+  profiles: peer2 
+  application:
+    name: serverdoo
+
+server:
+  port: ${PORT:8762}
+eureka:
+  client:
+    registerWithEureka: true #needs to be true for replica mode
+    fetchRegistry:  true #needs to be true for replica mode
+    serviceUrl:
+      defaultZone:  ${EUREKA_URL:http://daniel:daniel@peer1:8761/eureka/},${EUREKA_URL:http://daniel:daniel@peer2:8762/eureka/},${EUREKA_URL:http://daniel:daniel@peer3:8763/eureka/}
+#this is to have eureka server expire the lease in case of a client unexpected close, don't do it in production!!
+  server:
+    enableSelfPreservation: true  
+   
+  instance:
+    appname: serverdoo
+    hostname: peer2
+    metadataMap:
+      zone: zone2   

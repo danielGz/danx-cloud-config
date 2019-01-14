@@ -1,0 +1,40 @@
+spring:
+  profiles: zone2
+  application:
+    name: client-service
+
+server:
+  port: ${PORT:8082}  
+     
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://daniel:daniel@peer1:8761/eureka/},${EUREKA_URL:http://daniel:daniel@peer2:8762/eureka/},${EUREKA_URL:http://daniel:daniel@peer3:8763/eureka/}    
+  instance:
+    metadataMap:
+      zone: zone2 
+    appname: client-service
+    instance-id: ${spring.application.name}-2 
+    #statusPageUrl:  https://${eureka.hostname}:${server.port}/actuator/info
+    #healthCheckUrl: https://${eureka.hostname}:${server.port}/actuator/health
+    #homePageUrl:  https://${eureka.hostname}:${server.port}/
+      
+management:    
+  health:
+    mongo:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: shutdown,health,info
+  endpoint:    
+    health:      
+      show-details: always
+    shutdown:
+      enabled: true 
+      
+#these also work:
+
+#management.endpoints.web.exposure.include=*
+#endpoints.shutdown.enabled=true      
