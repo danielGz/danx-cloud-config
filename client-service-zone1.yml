@@ -33,6 +33,11 @@ management:
       show-details: always
     shutdown:
       enabled: true 
+sample:
+  string:
+    property: Client  App
+  int:
+    property: 1
       
 #these also work:
 
