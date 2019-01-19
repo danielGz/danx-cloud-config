@@ -35,7 +35,11 @@ management:
       enabled: true 
     refresh:
       enabled: true
-
+sample:
+  string:
+    property: Client Homer
+  int:
+    property: 7
       
 #these also work:
 
