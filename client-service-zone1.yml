@@ -27,15 +27,17 @@ management:
   endpoints:
     web:
       exposure:
-        include: shutdown,health,info
+        include: shutdown,health,info,refresh
   endpoint:    
     health:      
       show-details: always
     shutdown:
       enabled: true 
+    refresh:
+      enabled: true
 sample:
   string:
-    property: Client Simpson
+    property: Client Homer
   int:
     property: 7
       
